@@ -57,7 +57,7 @@ public class Remark extends DomainEntity {
 	}
 
 	@NotBlank
-	@Pattern(regexp = "yyyy-MM-dd")
+	@Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}")
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getTicker() {
 		return this.ticker;
@@ -69,7 +69,7 @@ public class Remark extends DomainEntity {
 
 	}
 
-	@Size(min = 1, max = 1000)
+	@Size(min = 1, max = 100)
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getBody() {
 		return this.body;
@@ -101,7 +101,7 @@ public class Remark extends DomainEntity {
 
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	public Date getMoment() {
 		return this.moment;
 	}

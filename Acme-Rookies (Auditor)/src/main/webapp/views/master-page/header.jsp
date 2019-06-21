@@ -42,6 +42,7 @@
 
 		<security:authorize access="hasRole('AUDITOR')">
 			<li><a href="audit/auditor/myList.do"><spring:message code="master.page.audits" /></a></li>
+			<li><a href="remark/auditor/myList.do"><spring:message code="master.page.remarks" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('COMPANY')">

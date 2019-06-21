@@ -75,6 +75,13 @@
 			access="hasRole('AUDITOR')" />
 		<security:intercept-url pattern="/audit/auditor/show.do"
 			access="hasRole('AUDITOR')" />
+			
+		<security:intercept-url pattern="/remark/auditor/myList.do"
+			access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/remark/auditor/edit.do"
+			access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/remark/auditor/show.do"
+			access="hasRole('AUDITOR')" />
 
 		<security:intercept-url pattern="/position/auditor/show.do"
 			access="hasRole('AUDITOR')" />
