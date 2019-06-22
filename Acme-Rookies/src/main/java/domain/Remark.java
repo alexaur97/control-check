@@ -9,16 +9,22 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+import org.hibernate.validator.constraints.URL;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Remark extends DomainEntity {
 
-	private String	photo;
+	private String	picture;
 	private Date	moment;
 	private String	body;
 	private String	ticker;
@@ -26,6 +32,8 @@ public class Remark extends DomainEntity {
 	private Audit	audit;
 
 
+	@NotNull
+	@Valid
 	@ManyToOne(optional = false)
 	public Audit getAudit() {
 		return this.audit;
@@ -37,6 +45,7 @@ public class Remark extends DomainEntity {
 
 	@NotBlank
 	@Pattern(regexp = "^DRAFT|FINAL$")
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getMode() {
 		return this.mode;
 	}
@@ -45,15 +54,19 @@ public class Remark extends DomainEntity {
 		this.mode = mode;
 	}
 
-	public String getPhoto() {
-		return this.photo;
+	@URL
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	public String getPicture() {
+		return this.picture;
 	}
 
-	public void setPhoto(final String photo) {
-		this.photo = photo;
+	public void setPicture(final String picture) {
+		this.picture = picture;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	public Date getMoment() {
 		return this.moment;
 	}
@@ -62,8 +75,8 @@ public class Remark extends DomainEntity {
 		this.moment = moment;
 	}
 
-	@NotBlank
-	@Size(min = 0, max = 100)
+	@Size(min = 1, max = 100)
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getBody() {
 		return this.body;
 	}
@@ -72,7 +85,9 @@ public class Remark extends DomainEntity {
 		this.body = body;
 	}
 
-	@Pattern(regexp = "^/w{2}/d{2}-mmddyy $")
+	@NotBlank
+	@Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}")
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getTicker() {
 		return this.ticker;
 	}

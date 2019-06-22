@@ -1,14 +1,21 @@
 
 package services;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
+import repositories.AuditorRepository;
 import repositories.RemarkRepository;
+import domain.Auditor;
 import domain.Company;
 import domain.Remark;
 
@@ -20,7 +27,13 @@ public class RemarkService {
 	private RemarkRepository	remarkRepository;
 
 	@Autowired
+	private AuditorService	auditorService;
+	
+	@Autowired
 	private CompanyService		companyService;
+
+	@Autowired
+	private Validator			validator;
 
 
 	//COnstructors -------------------------
@@ -56,9 +69,9 @@ public class RemarkService {
 
 	public void save(final Remark remark) {
 		Assert.notNull(remark);
+		this.companyService.findByPrincipal();
 		if (remark.getId() != 0) {
 			final Remark remarkDB = this.findOne(remark.getId());
-			System.out.println(remarkDB.getMode());
 			Assert.isTrue(remarkDB.getMode().equals("DRAFT"));
 		}
 		this.remarkRepository.save(remark);
@@ -76,18 +89,26 @@ public class RemarkService {
 		return res;
 	}
 
-	//	public Remark reconstruct(final Remark remark, final BindingResult binding) {
-	//		final Remark res = remark;
-	//
-	//		final Auditor auditor = this.auditorService.findByPrincipal();
-	//		res.setAuditor(auditor);
-	//		final Date date = new Date();
-	//		res.setMoment(date);
-	//
-	//		this.validator.validate(res, binding);
-	//		System.out.println(binding);
-	//		return res;
-	//	}
+	public Collection<Remark> findAllFinalMode() {
+		Auditor aud = this.auditorService.findByPrincipal();
+		final Collection<Remark> res = this.remarkRepository.findAllFinalMode(aud.getId());
+		return res;
+	}
+
+	public Remark reconstruct(final Remark remark, final BindingResult binding) {
+		final Remark res = remark;
+		final Date date = new Date();
+		res.setMoment(date);
+		final Date aux = date;
+		final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		final String ticker = dateFormat.format(aux);
+		res.setTicker(ticker);
+		res.setTicker(ticker);
+
+		this.validator.validate(res, binding);
+		System.out.println(binding);
+		return res;
+	}
 
 	//Other Methods-------
 }

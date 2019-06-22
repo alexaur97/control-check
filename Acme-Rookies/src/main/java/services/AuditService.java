@@ -14,6 +14,7 @@ import org.springframework.validation.Validator;
 import repositories.AuditRepository;
 import domain.Audit;
 import domain.Auditor;
+import domain.Company;
 
 @Service
 @Transactional
@@ -25,6 +26,9 @@ public class AuditService {
 
 	@Autowired
 	private AuditorService	auditorService;
+
+	@Autowired
+	private CompanyService	companyService;
 
 	@Autowired
 	private Validator		validator;
@@ -112,6 +116,12 @@ public class AuditService {
 
 	public Collection<Audit> findByPosition(final int positionId) {
 		final Collection<Audit> res = this.auditRepository.findByPosition(positionId);
+		return res;
+	}
+
+	public Collection<Audit> findByCompany() {
+		final Company company = this.companyService.findByPrincipal();
+		final Collection<Audit> res = this.auditRepository.findByCompany(company.getId());
 		return res;
 	}
 }
