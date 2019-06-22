@@ -12,7 +12,7 @@ import domain.Remark;
 @Repository
 public interface RemarkRepository extends JpaRepository<Remark, Integer> {
 
-	@Query("select Remark r where r.audit.position.company=?1")
+	@Query("select r from Remark r where r.audit.position.company=?1")
 	Collection<Remark> findByCompany(int id);
 
 }

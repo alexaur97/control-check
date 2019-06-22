@@ -143,6 +143,17 @@
 			</list>
 		</property>
 	</bean>
+	<bean id="userAccount12" class="security.UserAccount">
+		<property name="username" value="auditor2" />
+		<property name="password" value="04dd94ba3212ac52ad3a1f4cbfb52d4f" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="AUDITOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<!-- CreditCards -->
 	<bean id="creditCard1" class="domain.CreditCard">
@@ -243,7 +254,14 @@
 		<property name="expirationYear" value="21" />
 		<property name="cvv" value="148" />
 	</bean>
-
+<bean id="creditCard12" class="domain.CreditCard">
+		<property name="holderName" value="Carlos Martes Segundo" />
+		<property name="brandName" value="American Express" />
+		<property name="number" value="5463444779694305" />
+		<property name="expirationMonth" value="11" />
+		<property name="expirationYear" value="21" />
+		<property name="cvv" value="148" />
+	</bean>
 	<!-- Curriculums -->
 
 	<bean id="curriculum1" class="domain.Curriculum">
@@ -826,7 +844,24 @@
 			</list>
 		</property>
 	</bean>
-
+<bean id="actor12" class="domain.Auditor">
+		<property name="name" value="Carlos" />
+		<property name="surnames" value="Martes Segundo" />
+		<property name="VAT" value="ES626766163" />
+		<property name="creditCard" ref="creditCard12" />
+		<property name="photo" value="" />
+		<property name="email" value="auditor2@auditor1.com" />
+		<property name="phone" value="87857858767" />
+		<property name="address" value="" />
+		<property name="spammer" value="false" />
+		<property name="banned" value="false" />
+		<property name="userAccount" ref="userAccount12" />
+		<property name="positions">
+			<list>
+				<ref bean="position1" />
+			</list>
+		</property>
+	</bean>
 	<!-- Providers -->
 
 	<bean id="actor10" class="domain.Provider">
@@ -1591,5 +1626,46 @@
 	<bean id="spamWord9" class="domain.SpamWord">
 		<property name="word" value="has sido elegido" />
 	</bean>
+<!--  REMARKS -->
 
+	<bean id="remark1TEST" class="domain.Remark">
+		<property name="moment" value="08/12/2018" />
+		<property name="ticker" value="2018-08-12" />
+		<property name="body" value="TEST" />
+<property name="picture" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
+		<property name="mode" value="FINAL" />
+		<property name="auditor" ref="actor9" />
+		<property name="audit" ref="audit2" />
+		
+	</bean>
+	<bean id="remark2TEST" class="domain.Remark">
+		<property name="moment" value="08/12/2018" />
+		<property name="ticker" value="2018-08-12" />
+		<property name="body" value="TEST" />
+<property name="picture" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
+		<property name="mode" value="FINAL" />
+		<property name="auditor" ref="actor9" />
+		<property name="audit" ref="audit2" />
+		
+	</bean>
+	<bean id="remark3TEST" class="domain.Remark">
+		<property name="moment" value="06/20/2019" />
+		<property name="ticker" value="2019-06-20" />
+		<property name="body" value="TEST" />
+<property name="picture" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
+		<property name="mode" value="FINAL" />
+		<property name="auditor" ref="actor12" />
+		<property name="audit" ref="audit2" />
+		
+	</bean>
+	<bean id="remark4TEST" class="domain.Remark">
+		<property name="moment" value="05/05/2019" />
+		<property name="ticker" value="2019-05-05" />
+		<property name="body" value="TEST" />
+<property name="picture" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
+		<property name="mode" value="FINAL" />
+		<property name="auditor" ref="actor12" />
+		<property name="audit" ref="audit2" />
+		
+	</bean>
 </beans>

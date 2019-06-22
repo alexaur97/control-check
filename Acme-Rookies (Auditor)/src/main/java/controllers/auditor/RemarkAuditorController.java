@@ -2,8 +2,10 @@
 package controllers.auditor;
 
 import java.util.Collection;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -129,6 +131,9 @@ public class RemarkAuditorController extends AbstractController {
 			final Collection<Remark> remarks = this.remarkService.findByAuditor();
 			Assert.isTrue(remarks.contains(remark));
 			res = new ModelAndView("remark/show");
+			final Locale l = LocaleContextHolder.getLocale();
+			final String lang = l.getLanguage();
+			res.addObject("lang", lang);
 			res.addObject("remark", remark);
 
 		} catch (final Throwable oops) {

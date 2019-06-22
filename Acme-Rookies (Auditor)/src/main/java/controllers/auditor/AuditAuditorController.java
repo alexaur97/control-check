@@ -15,10 +15,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.AuditService;
 import services.AuditorService;
+import services.RemarkService;
 import controllers.AbstractController;
 import domain.Audit;
 import domain.Auditor;
 import domain.Position;
+import domain.Remark;
 
 @Controller
 @RequestMapping("/audit/auditor/")
@@ -28,6 +30,9 @@ public class AuditAuditorController extends AbstractController {
 	private AuditService	auditService;
 	@Autowired
 	private AuditorService	auditorService;
+
+	@Autowired
+	private RemarkService	remarkService;
 
 
 	@RequestMapping(value = "/myList", method = RequestMethod.GET)
@@ -151,9 +156,18 @@ public class AuditAuditorController extends AbstractController {
 
 			final Collection<Audit> audits = this.auditService.findByAuditor();
 			Assert.isTrue(audits.contains(audit));
+			final Collection<Remark> remarks = this.remarkService.findByAudit(audit.getId());
+			final Boolean a = !remarks.isEmpty();
+			final Collection<Remark> remarksFinal = this.remarkService.findByAuditFinal(audit.getId());
+			final Boolean c = !remarksFinal.isEmpty();
 			res = new ModelAndView("audit/show");
-			res.addObject("audit", audit);
 
+			res.addObject("audit", audit);
+			res.addObject("remarks", remarks);
+			res.addObject("remarksFinal", remarksFinal);
+			res.addObject("a", a);
+
+			res.addObject("c", c);
 		} catch (final Throwable oops) {
 			res = new ModelAndView("redirect:/#");
 		}

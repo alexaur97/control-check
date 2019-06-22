@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.RemarkRepository;
-import domain.Company;
 import domain.Remark;
 
 @Service
@@ -71,8 +70,8 @@ public class RemarkService {
 	}
 
 	public Collection<Remark> findByCompany() {
-		final Company company = this.companyService.findByPrincipal();
-		final Collection<Remark> res = this.remarkRepository.findByCompany(company.getId());
+		final Integer idcompany = this.companyService.findByPrincipal().getId();
+		final Collection<Remark> res = this.remarkRepository.findByCompany(idcompany);
 		return res;
 	}
 
