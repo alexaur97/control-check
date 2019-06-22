@@ -13,7 +13,6 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.AuditorRepository;
 import repositories.RemarkRepository;
 import domain.Auditor;
 import domain.Company;
@@ -27,8 +26,8 @@ public class RemarkService {
 	private RemarkRepository	remarkRepository;
 
 	@Autowired
-	private AuditorService	auditorService;
-	
+	private AuditorService		auditorService;
+
 	@Autowired
 	private CompanyService		companyService;
 
@@ -90,12 +89,13 @@ public class RemarkService {
 	}
 
 	public Collection<Remark> findAllFinalMode() {
-		Auditor aud = this.auditorService.findByPrincipal();
+		final Auditor aud = this.auditorService.findByPrincipal();
 		final Collection<Remark> res = this.remarkRepository.findAllFinalMode(aud.getId());
 		return res;
 	}
 
 	public Remark reconstruct(final Remark remark, final BindingResult binding) {
+		this.companyService.findByPrincipal();
 		final Remark res = remark;
 		final Date date = new Date();
 		res.setMoment(date);
