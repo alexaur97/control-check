@@ -28,7 +28,7 @@
 	requestURI="${requestURI}" class="displaytag table">
 	<display:column titleKey="remark.ticker" property="ticker" />
 	<display:column titleKey="remark.mode" property="mode" />
-	<display:column titleKey="remark.moment" property="moment" />
+
 	
 	
 	<display:column titleKey="remark.edit">

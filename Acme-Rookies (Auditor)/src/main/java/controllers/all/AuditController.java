@@ -33,11 +33,16 @@ public class AuditController extends AbstractController {
 		try {
 			final Audit audit = this.auditService.findOne(auditId);
 			final Collection<Remark> remarks = this.remarkService.findByAudit(audit.getId());
+			final Boolean a = !remarks.isEmpty();
 			final Collection<Remark> remarksFinal = this.remarkService.findByAuditFinal(audit.getId());
+			final Boolean c = !remarksFinal.isEmpty();
 			result = new ModelAndView("audit/display");
 			result.addObject("audit", audit);
 			result.addObject("remarks", remarks);
 			result.addObject("remarksFinal", remarksFinal);
+			result.addObject("a", a);
+
+			result.addObject("c", c);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/#");
 		}
