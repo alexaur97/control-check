@@ -29,7 +29,6 @@ public class Remark extends DomainEntity {
 	private String	body;
 	private String	ticker;
 	private String	mode;
-	private Company	company;
 	private Audit	audit;
 
 
@@ -42,17 +41,6 @@ public class Remark extends DomainEntity {
 
 	public void setAudit(final Audit audit) {
 		this.audit = audit;
-	}
-
-	@NotNull
-	@Valid
-	@ManyToOne(optional = false)
-	public Company getCompany() {
-		return this.company;
-	}
-
-	public void setCompany(final Company company) {
-		this.company = company;
 	}
 
 	@NotBlank

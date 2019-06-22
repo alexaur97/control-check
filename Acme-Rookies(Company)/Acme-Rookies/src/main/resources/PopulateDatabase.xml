@@ -1600,7 +1600,6 @@
 		<property name="body" value="TEST" />
 		<property name="photo" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
 		<property name="mode" value="FINAL" />
-		<property name="company" ref="actor8" />
 		<property name="audit" ref="audit2" />
 		
 	</bean>
@@ -1610,7 +1609,6 @@
 		<property name="body" value="TEST" />
 		<property name="photo" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
 		<property name="mode" value="FINAL" />
-		<property name="company" ref="actor4" />
 		<property name="audit" ref="audit2" />
 		
 	</bean>
@@ -1620,7 +1618,6 @@
 		<property name="body" value="TEST" />
 		<property name="photo" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
 		<property name="mode" value="FINAL" />
-		<property name="company" ref="actor3" />
 		<property name="audit" ref="audit2" />
 		
 	</bean>
@@ -1630,7 +1627,6 @@
 		<property name="body" value="TEST" />
 		<property name="photo" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
 		<property name="mode" value="FINAL" />
-		<property name="company" ref="actor2" />
 		<property name="audit" ref="audit2" />
 		
 	</bean>

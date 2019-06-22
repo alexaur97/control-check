@@ -18,6 +18,9 @@ public class RemarkService {
 	@Autowired
 	private RemarkRepository	remarkRepository;
 
+	@Autowired
+	private CompanyService		companyService;
+
 
 	//COnstructors -------------------------
 	public RemarkService() {
@@ -64,6 +67,12 @@ public class RemarkService {
 		Assert.notNull(remark);
 		Assert.isTrue(remark.getMode().equals("DRAFT"));
 		this.remarkRepository.delete(remark);
+	}
+
+	public Collection<Remark> findByCompany() {
+		final Integer idcompany = this.companyService.findByPrincipal().getId();
+		final Collection<Remark> res = this.remarkRepository.findByCompany(idcompany);
+		return res;
 	}
 
 	//	public Remark reconstruct(final Remark remark, final BindingResult binding) {
