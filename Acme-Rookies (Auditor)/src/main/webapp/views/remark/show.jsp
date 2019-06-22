@@ -26,8 +26,16 @@
 <br/>
 <spring:message code="remark.body"/>: <jstl:out value="${remark.body}"></jstl:out>
 <br/>
-<spring:message code="remark.moment"/>: <fmt:formatDate type = "date" pattern = "yyyy-MM-dd HH:mm:ss"
+<jstl:choose>
+	<jstl:when test="${lang eq 'en'}">
+		<spring:message code="remark.moment"/>: <fmt:formatDate type = "date" pattern = "yy/MM/dd HH:mm"
          value = "${remark.moment}" />
+    </jstl:when>
+    <jstl:otherwise>
+    	<spring:message code="remark.moment"/>: <fmt:formatDate type = "date" pattern = "dd-MM-yy HH:mm"
+         value = "${remark.moment}" />
+    </jstl:otherwise>
+</jstl:choose>
 <br/>
 <spring:message code="remark.mode"/>: <jstl:out value="${remark.mode}"></jstl:out>
 <br/>

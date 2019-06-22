@@ -28,6 +28,51 @@
 <acme:display code="audit.auditor" path="${audit.auditor.name}"/>
 
 
+<security:authorize access="hasRole('AUDITOR')">
+<jstl:if test="${a eq true}">
+<h4>
+	<spring:message code="audit.remarks" />
+</h4>
+<table>
+<tr>
+		<th><spring:message code="audit.remark.ticker" /></th>
+		<th><spring:message code="audit.show" /></th>
+	</tr>
+<jstl:forEach items="${remarks}" var="x">
+		<tr>
+			<td><jstl:out value="${x.ticker}" /></td>		
+			<td><acme:cancel url="/remark/auditor/show.do?remarkId=${x.id}"
+			code="audit.show" /></td>
+		</tr>
+</jstl:forEach>
+</table>
+</jstl:if>
+</security:authorize>
+
+
+
+<security:authorize access="!hasRole('AUDITOR')">
+<jstl:if test="${c eq true}">
+<h4>
+	<spring:message code="audit.remarks" />
+</h4>
+<table>
+<tr>
+		<th><spring:message code="audit.remark.ticker" /></th>
+		<th><spring:message code="audit.remark.display" /></th>
+	</tr>
+<jstl:forEach items="${remarksFinal}" var="x">
+		<tr>
+			<td><jstl:out value="${x.ticker}" /></td>	
+			<td><acme:cancel url="/remark/display.do?remarkId=${x.id}"
+			code="audit.remark.display" /></td>
+		</tr>
+</jstl:forEach>
+</table>
+</jstl:if>
+</security:authorize>
+
+
 <acme:button url="/position/show.do?positionId=${audit.position.id}" code="audit.back"/>
 <br/>
 
