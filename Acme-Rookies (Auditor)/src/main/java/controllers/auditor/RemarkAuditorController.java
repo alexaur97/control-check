@@ -2,6 +2,7 @@
 package controllers.auditor;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +43,12 @@ public class RemarkAuditorController extends AbstractController {
 		try {
 			this.auditorService.findByPrincipal();
 			final Collection<Remark> remarks = this.remarkService.findByAuditor();
-
+			final Date fecha = new Date();
+			final Long date = fecha.getTime();
 			result = new ModelAndView("remark/myList");
 			result.addObject("requestURI", "remark/auditor/myList.do");
 			result.addObject("remarks", remarks);
+			result.addObject("date", date);
 
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/#");
@@ -53,7 +56,6 @@ public class RemarkAuditorController extends AbstractController {
 
 		return result;
 	}
-
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 

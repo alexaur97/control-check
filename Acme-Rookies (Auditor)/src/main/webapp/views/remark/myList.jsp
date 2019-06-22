@@ -26,9 +26,28 @@
 
 <display:table pagesize="5" name="remarks" id="remark"
 	requestURI="${requestURI}" class="displaytag table">
-	<display:column titleKey="remark.ticker" property="ticker" />
-	<display:column titleKey="remark.mode" property="mode" />
-
+	
+	
+	<jstl:if test="${remark.mode eq 'FINAL'}">
+		<jstl:if test="${((date-remark.moment.time)/86400000)<30}">
+		<display:column style="color:indigo" titleKey="remark.ticker" property="ticker" />
+	<display:column style="color:indigo"  titleKey="remark.mode" property="mode" />
+			</jstl:if>
+			<jstl:if test="${((date-remark.moment.time)/86400000)>30}">
+			<jstl:if test="${((date-remark.moment.time)/86400000)<60}">
+		<display:column style="color:darkSlateGrey" titleKey="remark.ticker" property="ticker" />
+	<display:column style="color:darkSlateGrey" titleKey="remark.mode" property="mode" />
+			</jstl:if>
+			</jstl:if>
+			<jstl:if test="${((date-remark.moment.time)/86400000)>60}">
+		<display:column style="color:papayaWhip" titleKey="remark.ticker" property="ticker" />
+	<display:column style="color:papayaWhip" titleKey="remark.mode" property="mode" />
+			</jstl:if>
+		</jstl:if>
+	<jstl:if test="${remark.mode eq 'DRAFT'}">
+<display:column titleKey="remark.ticker" property="ticker" />
+	<display:column  titleKey="remark.mode" property="mode" />
+			</jstl:if>
 	
 	
 	<display:column titleKey="remark.edit">
