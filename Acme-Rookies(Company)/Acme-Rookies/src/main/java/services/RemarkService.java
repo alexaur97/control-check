@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.RemarkRepository;
-import domain.Company;
 import domain.Remark;
 
 @Service
@@ -18,9 +17,6 @@ public class RemarkService {
 
 	@Autowired
 	private RemarkRepository	remarkRepository;
-
-	@Autowired
-	private CompanyService		companyService;
 
 
 	//COnstructors -------------------------
@@ -68,12 +64,6 @@ public class RemarkService {
 		Assert.notNull(remark);
 		Assert.isTrue(remark.getMode().equals("DRAFT"));
 		this.remarkRepository.delete(remark);
-	}
-
-	public Collection<Remark> findByCompany() {
-		final Company company = this.companyService.findByPrincipal();
-		final Collection<Remark> res = this.remarkRepository.findByCompany(company.getId());
-		return res;
 	}
 
 	//	public Remark reconstruct(final Remark remark, final BindingResult binding) {

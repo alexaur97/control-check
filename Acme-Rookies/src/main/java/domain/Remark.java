@@ -6,7 +6,7 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
@@ -26,7 +26,7 @@ public class Remark extends DomainEntity {
 	private Audit	audit;
 
 
-	@OneToMany
+	@ManyToOne(optional = false)
 	public Audit getAudit() {
 		return this.audit;
 	}

@@ -1592,4 +1592,46 @@
 		<property name="word" value="has sido elegido" />
 	</bean>
 
+	<!--  REMARKS -->
+
+	<bean id="remark1TEST" class="domain.Remark">
+		<property name="moment" value="08/12/2018" />
+		<property name="ticker" value="2018-08-12" />
+		<property name="body" value="TEST" />
+		<property name="photo" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
+		<property name="mode" value="FINAL" />
+		<property name="company" ref="actor8" />
+		<property name="audit" ref="audit2" />
+		
+	</bean>
+	<bean id="remark2TEST" class="domain.Remark">
+		<property name="moment" value="08/12/2018" />
+		<property name="ticker" value="2018-08-12" />
+		<property name="body" value="TEST" />
+		<property name="photo" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
+		<property name="mode" value="FINAL" />
+		<property name="company" ref="actor4" />
+		<property name="audit" ref="audit2" />
+		
+	</bean>
+	<bean id="remark3TEST" class="domain.Remark">
+		<property name="moment" value="06/20/2019" />
+		<property name="ticker" value="2019-06-20" />
+		<property name="body" value="TEST" />
+		<property name="photo" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
+		<property name="mode" value="FINAL" />
+		<property name="company" ref="actor3" />
+		<property name="audit" ref="audit2" />
+		
+	</bean>
+	<bean id="remark4TEST" class="domain.Remark">
+		<property name="moment" value="05/05/2019" />
+		<property name="ticker" value="2019-05-05" />
+		<property name="body" value="TEST" />
+		<property name="photo" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
+		<property name="mode" value="FINAL" />
+		<property name="company" ref="actor2" />
+		<property name="audit" ref="audit2" />
+		
+	</bean>
 </beans>
