@@ -9,8 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -63,7 +63,7 @@ public class Remark extends DomainEntity {
 	}
 
 	@NotBlank
-	@Max(100)
+	@Size(min = 0, max = 100)
 	public String getBody() {
 		return this.body;
 	}
