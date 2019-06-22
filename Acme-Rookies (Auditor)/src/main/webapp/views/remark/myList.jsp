@@ -37,7 +37,12 @@
 			code="remark.edit" />
 		</jstl:if>
 	</display:column>
-	
+	<display:column titleKey="remark.delete">
+	<jstl:if test="${remark.mode eq 'DRAFT'}">
+			<acme:cancel url="/remark/auditor/delete.do?remarkId=${remark.id}"
+			code="remark.delete" />
+		</jstl:if>
+	</display:column>
 		<display:column titleKey="remark.show">
 	
 		<acme:cancel url="/remark/auditor/show.do?remarkId=${remark.id}"

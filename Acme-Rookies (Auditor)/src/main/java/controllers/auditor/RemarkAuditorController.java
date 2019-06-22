@@ -153,5 +153,22 @@ public class RemarkAuditorController extends AbstractController {
 
 		return res;
 	}
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam final int remarkId) {
+		ModelAndView res;
+		try {
 
+			final Remark remark = this.remarkService.findOne(remarkId);
+			Assert.notNull(remark);
+
+			Assert.isTrue(remark.getMode().equals("DRAFT"));
+			final Collection<Remark> remarks = this.remarkService.findByAuditor();
+			Assert.isTrue(remarks.contains(remark));
+			this.remarkService.delete(remark);
+			res = new ModelAndView("redirect:/remark/auditor/myList.do");
+		} catch (final Throwable oops) {
+			res = new ModelAndView("redirect:/#");
+		}
+		return res;
+	}
 }
