@@ -2,6 +2,7 @@
 package controllers.auditor;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -160,20 +161,21 @@ public class AuditAuditorController extends AbstractController {
 			final Boolean a = !remarks.isEmpty();
 			final Collection<Remark> remarksFinal = this.remarkService.findByAuditFinal(audit.getId());
 			final Boolean c = !remarksFinal.isEmpty();
+			final Date fecha = new Date();
+			final Long date = fecha.getTime();
 			res = new ModelAndView("audit/show");
 
 			res.addObject("audit", audit);
 			res.addObject("remarks", remarks);
 			res.addObject("remarksFinal", remarksFinal);
 			res.addObject("a", a);
-
+			res.addObject("date", date);
 			res.addObject("c", c);
 		} catch (final Throwable oops) {
 			res = new ModelAndView("redirect:/#");
 		}
 		return res;
 	}
-
 	protected ModelAndView createEditModelAndView(final Audit audit) {
 		return this.createEditModelAndView(audit, null);
 	}
