@@ -104,13 +104,19 @@ public class RemarkService {
 	public Remark reconstruct(final Remark remark, final BindingResult binding) {
 		this.companyService.findByPrincipal();
 		final Remark res = remark;
+
 		final Date date = new Date();
 		res.setMoment(date);
-		final Date aux = date;
-		final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		final String ticker = dateFormat.format(aux);
-		res.setTicker(ticker);
-		res.setTicker(ticker);
+
+		if (remark.getId() == 0) {
+
+			final Date aux = date;
+			final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			final String ticker = dateFormat.format(aux);
+			res.setTicker(ticker);
+		}
+
+		res.setTicker(remark.getTicker());
 
 		this.validator.validate(res, binding);
 		System.out.println(binding);
