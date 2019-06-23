@@ -95,10 +95,12 @@ public class RemarkService {
 		res.setAuditor(auditor);
 		final Date date = new Date();
 		res.setMoment(date);
-		final Date aux = date;
-		final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		final String ticker = dateFormat.format(aux);
-		res.setTicker(ticker);
+		if (res.getTicker() == null) {
+			final Date aux = date;
+			final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			final String ticker = dateFormat.format(aux);
+			res.setTicker(ticker);
+		}
 		this.validator.validate(res, binding);
 		System.out.println(binding);
 		return res;

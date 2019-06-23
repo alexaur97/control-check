@@ -32,6 +32,22 @@ public class RemarkServiceTest extends AbstractTest {
 	private RemarkService	remarkService;
 
 
+	@Test
+	public void testCreateRemark() {
+		super.authenticate("auditor1");
+		final Remark remark = new Remark();
+		final int IdAudit = super.getEntityId("audit1");
+		final Audit audit = this.auditService.findOne(IdAudit);
+		final Auditor auditor = this.auditorService.findByPrincipal();
+		remark.setAudit(audit);
+		remark.setAuditor(auditor);
+		remark.setBody("TEST");
+		remark.setMode("FINAL");
+		final Remark remarkFinal = this.remarkService.reconstruct(remark, null);
+		this.remarkService.save(remarkFinal);
+		super.unauthenticate();
+	}
+
 	//	Para el caso negativo estamos intentando que un Auditor cree una remark con imagen invalida
 	//esto debe provocar un fallo en el sistema porque este solo puede ser una url
 	//Análisis del sentence coverage: el sistema al llamar al validate comprueba
