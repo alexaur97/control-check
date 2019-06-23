@@ -105,6 +105,8 @@ public class RemarkService {
 		this.companyService.findByPrincipal();
 		final Remark res = remark;
 
+		final Remark r = this.remarkRepository.findOne(remark.getId());
+
 		final Date date = new Date();
 		res.setMoment(date);
 
@@ -114,9 +116,8 @@ public class RemarkService {
 			final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			final String ticker = dateFormat.format(aux);
 			res.setTicker(ticker);
-		}
-
-		res.setTicker(remark.getTicker());
+		} else
+			res.setTicker(r.getTicker());
 
 		this.validator.validate(res, binding);
 		System.out.println(binding);

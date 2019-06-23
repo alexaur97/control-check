@@ -52,7 +52,7 @@ public class RemarkCompanyController extends AbstractController {
 
 			remarks = this.remarkService.findByCompany();
 			result = new ModelAndView("remark/list");
-			result.addObject("requestURI", "remark/company/list.do");
+			result.addObject("requestURI", "remark/company/myList.do");
 			result.addObject("remarks", remarks);
 			result.addObject("date", date);
 			result.addObject("c", c);
@@ -143,28 +143,7 @@ public class RemarkCompanyController extends AbstractController {
 
 		return result;
 	}
-	//	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "delete")
-	//	public ModelAndView delete(final Position position, final BindingResult binding) {
-	//		ModelAndView result;
-	//		final Position pos = this.positionService.findOne(position.getId());
-	//		try {
-	//
-	//			this.positionService.delete(pos);
-	//			result = new ModelAndView("redirect:/position/company/myList.do");
-	//
-	//		} catch (final Throwable oops) {
-	//			result = this.createEditModelAndView(pos, "position.commit.error");
-	//
-	//			final String msg = oops.getMessage();
-	//			if (msg.equals("positioncannotDelete")) {
-	//				final Boolean positioncannotDelete = true;
-	//				result.addObject("positioncannotDelete", positioncannotDelete);
-	//
-	//			}
-	//		}
-	//
-	//		return result;
-	//	}
+
 	protected ModelAndView createEditModelAndView(final Remark remark) {
 		return this.createEditModelAndView(remark, null);
 	}
