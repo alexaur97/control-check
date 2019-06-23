@@ -858,7 +858,7 @@
 		<property name="userAccount" ref="userAccount12" />
 		<property name="positions">
 			<list>
-				<ref bean="position1" />
+				<ref bean="position2" />
 			</list>
 		</property>
 	</bean>
@@ -1596,7 +1596,14 @@
 		<property name="auditor" ref="actor9" />
 		<property name="position" ref="position1" />
 	</bean>
-
+<bean id="audit3" class="domain.Audit">
+		<property name="text" value="Not bad" />
+		<property name="moment" value="03/12/2018 18:11" />
+		<property name="score" value="5" />
+		<property name="mode" value="FINAL" />
+		<property name="auditor" ref="actor12" />
+		<property name="position" ref="position2" />
+	</bean>
 	<!-- Spamwords -->
 
 	<bean id="spamWord1" class="domain.SpamWord">
@@ -1626,6 +1633,7 @@
 	<bean id="spamWord9" class="domain.SpamWord">
 		<property name="word" value="has sido elegido" />
 	</bean>
+	
 <!--  REMARKS -->
 
 	<bean id="remark1TEST" class="domain.Remark">
@@ -1655,7 +1663,7 @@
 <property name="picture" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
 		<property name="mode" value="FINAL" />
 		<property name="auditor" ref="actor12" />
-		<property name="audit" ref="audit2" />
+		<property name="audit" ref="audit3" />
 		
 	</bean>
 	<bean id="remark4TEST" class="domain.Remark">
@@ -1665,7 +1673,26 @@
 <property name="picture" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
 		<property name="mode" value="FINAL" />
 		<property name="auditor" ref="actor12" />
+		<property name="audit" ref="audit3" />
+		
+	</bean>
+	<bean id="remark5" class="domain.Remark">
+		<property name="moment" value="05/05/2019" />
+		<property name="ticker" value="2019-05-05" />
+		<property name="body" value="prueba" />
+<property name="picture" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
+		<property name="mode" value="DRAFT" />
+		<property name="auditor" ref="actor9" />
 		<property name="audit" ref="audit2" />
 		
 	</bean>
+	<bean id="remark6" class="domain.Remark">
+		<property name="moment" value="08/12/2018" />
+		<property name="ticker" value="2018-08-12" />
+		<property name="body" value="pruebas" />
+<property name="picture" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
+		<property name="mode" value="DRAFT" />
+		<property name="auditor" ref="actor12" />
+		<property name="audit" ref="audit3" />
+		</bean>
 </beans>
