@@ -95,6 +95,9 @@
 			
 		<security:intercept-url pattern="/remark/company/show.do"
 			access="hasRole('COMPANY')" />
+			
+		<security:intercept-url pattern="/remark/company/delete.do"
+			access="hasRole('COMPANY')" />
 
 
 		<security:intercept-url pattern="/position/company/myList.do"

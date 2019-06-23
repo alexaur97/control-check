@@ -3,8 +3,10 @@ package controllers.company;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -123,6 +125,23 @@ public class RemarkCompanyController extends AbstractController {
 		return res;
 	}
 
+	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(final Remark remark, final BindingResult binding) {
+		ModelAndView result;
+		final Remark res = this.remarkService.findOne(remark.getId());
+		try {
+
+			this.remarkService.delete(res);
+			result = new ModelAndView("redirect:/remark/company/myList.do");
+
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/#");
+
+		}
+
+		return result;
+	}
+
 	//	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "delete")
 	//	public ModelAndView delete(final Position position, final BindingResult binding) {
 	//		ModelAndView result;
@@ -171,6 +190,10 @@ public class RemarkCompanyController extends AbstractController {
 			Assert.isTrue(remark.getAudit().getPosition().getCompany().equals(company));
 
 			result = new ModelAndView("remark/show");
+
+			final Locale l = LocaleContextHolder.getLocale();
+			final String lang = l.getLanguage();
+			result.addObject("lang", lang);
 			result.addObject("remark", remark);
 
 		} catch (final Exception e) {
@@ -179,5 +202,26 @@ public class RemarkCompanyController extends AbstractController {
 
 		return result;
 	}
+
+	//	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	//	public ModelAndView display(@RequestParam final int remarkId) {
+	//		ModelAndView result;
+	//		final Remark remark;
+	//
+	//		try {
+	//			final Company company = this.companyService.findByPrincipal();
+	//			Assert.notNull(remarkId);
+	//			remark = this.remarkService.findOne(remarkId);
+	//			Assert.isTrue(remark.getAudit().getPosition().getCompany().equals(company));
+	//
+	//			result = new ModelAndView("remark/display");
+	//			result.addObject("remark", remark);
+	//
+	//		} catch (final Exception e) {
+	//			result = new ModelAndView("redirect:/#");
+	//		}
+	//
+	//		return result;
+	//	}
 
 }
