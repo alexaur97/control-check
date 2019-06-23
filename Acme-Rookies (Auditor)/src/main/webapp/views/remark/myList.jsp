@@ -28,7 +28,6 @@
 	requestURI="${requestURI}" class="displaytag table">
 	
 	
-	<jstl:if test="${remark.mode eq 'FINAL'}">
 		<jstl:if test="${((date-remark.moment.time)/86400000)<30}">
 		<display:column style="color:indigo" titleKey="remark.ticker" property="ticker" />
 	<display:column style="color:indigo"  titleKey="remark.mode" property="mode" />
@@ -43,11 +42,7 @@
 		<display:column style="color:papayaWhip" titleKey="remark.ticker" property="ticker" />
 	<display:column style="color:papayaWhip" titleKey="remark.mode" property="mode" />
 			</jstl:if>
-		</jstl:if>
-	<jstl:if test="${remark.mode eq 'DRAFT'}">
-<display:column titleKey="remark.ticker" property="ticker" />
-	<display:column  titleKey="remark.mode" property="mode" />
-			</jstl:if>
+	
 	
 	
 	<display:column titleKey="remark.edit">

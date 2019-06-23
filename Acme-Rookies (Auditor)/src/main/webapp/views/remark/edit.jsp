@@ -54,8 +54,8 @@
 						
 						<acme:submit name="save" code="remark.save" />
 						<jstl:if test="${remark.id!=0}">
-							<acme:submitConfirmation name="delete" code="remark.delete"
-								onclick="remark.delete.confirmation" />
+							<acme:cancel url="/remark/auditor/delete.do?remarkId=${remark.id}"
+							code="remark.delete" />
 						</jstl:if>
 						<acme:cancel url="/remark/auditor/myList.do"
 							code="remark.cancel" />

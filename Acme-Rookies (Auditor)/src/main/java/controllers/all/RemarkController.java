@@ -27,6 +27,7 @@ public class RemarkController extends AbstractController {
 			final Remark remark = this.remarkService.findOne(remarkId);
 			result = new ModelAndView("remark/display");
 			result.addObject("remark", remark);
+
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/#");
 		}

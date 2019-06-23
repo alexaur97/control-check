@@ -79,7 +79,7 @@ public class Remark extends DomainEntity {
 	}
 
 	@NotBlank
-	@Pattern(regexp = "^DRAFT|FINAL$")
+	@Pattern(regexp = "^(DRAFT|FINAL)$")
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getMode() {
 		return this.mode;
