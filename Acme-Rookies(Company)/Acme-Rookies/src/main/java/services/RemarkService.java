@@ -45,6 +45,8 @@ public class RemarkService {
 	public Remark create() {
 		Remark result;
 
+		this.companyService.findByPrincipal();
+
 		result = new Remark();
 
 		return result;
