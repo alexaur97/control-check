@@ -18,4 +18,7 @@ public interface RemarkRepository extends JpaRepository<Remark, Integer> {
 	@Query("select r from Remark r where r.mode='FINAL' and r.audit.auditor.id=?1")
 	Collection<Remark> findAllFinalMode(int i);
 
+	@Query("select r from Remark r where r.mode='FINAL' and r.audit.id=?1")
+	Collection<Remark> findByAudit(int i);
+
 }
