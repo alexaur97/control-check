@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Date;
@@ -9,90 +8,97 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.hibernate.validator.constraints.URL;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Remark extends DomainEntity {
 
-	private String	picture;
-	private Date	moment;
-	private String	body;
-	private String	ticker;
-	private String	mode;
-	private Audit	audit;
+	
+	private Company company;
+	private Application application;
 
+	private String ticker;
+	private Date publicationMoment;
+	private String body;
+	private String picture;
+	private String mode;
 
-	@NotNull
-	@Valid
 	@ManyToOne(optional = false)
-	public Audit getAudit() {
-		return this.audit;
+	public Company getCompany() {
+		return company;
 	}
 
-	public void setAudit(final Audit audit) {
-		this.audit = audit;
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
+	@ManyToOne(optional = false)
+	public Application getApplication() {
+		return application;
+	}
+
+	public void setApplication(Application application) {
+		this.application = application;
+	}
+	
 	@NotBlank
-	@Pattern(regexp = "^DRAFT|FINAL$")
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getMode() {
-		return this.mode;
+	public String getTicker() {
+		return ticker;
 	}
 
-	public void setMode(final String mode) {
-		this.mode = mode;
-	}
-
-	@URL
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getPicture() {
-		return this.picture;
-	}
-
-	public void setPicture(final String picture) {
-		this.picture = picture;
+	public void setTicker(String ticker) {
+		this.ticker = ticker;
 	}
 
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
-	public Date getMoment() {
-		return this.moment;
+	public Date getPublicationMoment() {
+		return publicationMoment;
 	}
 
-	public void setMoment(final Date moment) {
-		this.moment = moment;
-	}
-
-	@Size(min = 1, max = 100)
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getBody() {
-		return this.body;
-	}
-
-	public void setBody(final String body) {
-		this.body = body;
+	public void setPublicationMoment(Date publicationMoment) {
+		this.publicationMoment = publicationMoment;
 	}
 
 	@NotBlank
-	@Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}")
+	@Size(max = 100)
 	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getTicker() {
-		return this.ticker;
+	public String getBody() {
+		return body;
 	}
 
-	public void setTicker(final String ticker) {
-		this.ticker = ticker;
+	public void setBody(String body) {
+		this.body = body;
 	}
+
+	@URL
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	@NotNull
+	@Pattern(regexp = "^(DRAFT|FINAL)$")
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+
 }

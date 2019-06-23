@@ -2,8 +2,11 @@
 package controllers.company;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +60,14 @@ public class ApplicationCompanyController extends AbstractController {
 			
 			Boolean bool = applications.contains(application);
 			result.addObject("bool", bool);
+			
+			final Locale l = LocaleContextHolder.getLocale();
+			final String lang = l.getLanguage();
+			result.addObject("lang", lang);
+			
+			final Date d = new Date();
+			final Long date = d.getTime();
+			result.addObject("date", date);
 			
 			//---------------------------
 		

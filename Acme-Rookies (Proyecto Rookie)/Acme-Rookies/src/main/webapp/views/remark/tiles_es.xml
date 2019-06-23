@@ -10,21 +10,29 @@
 
 <tiles-definitions>
 
-	<definition name="remark/edit" extends="master.page">
-		<put-attribute name="title" value="Editar Reseña" />
-		<put-attribute name="body" value="/views/remark/edit.jsp" />
-	</definition>
-	
 	<definition name="remark/list" extends="master.page">
-		<put-attribute name="title" value="Listar Reseña" />
-		<put-attribute name="body" value="/views/remark/list.jsp" />
+		<put-attribute name="title" value="Lista de XXXX" />
+		<put-attribute name="body"
+			value="/views/remark/list.jsp" />
 	</definition>
-	
+
 	<definition name="remark/show" extends="master.page">
-		<put-attribute name="title" value="Mostrar Reseña" />
-		<put-attribute name="body" value="/views/remark/show.jsp" />
+		<put-attribute name="title" value="Mostrar XXXX" />
+		<put-attribute name="body"
+			value="/views/remark/show.jsp" />
+	</definition>
+
+	<definition name="remark/create" extends="master.page">
+		<put-attribute name="title" value="Crear XXXX" />
+		<put-attribute name="body"
+			value="/views/remark/create.jsp" />
 	</definition>
 	
-	
+	<definition name="remark/edit" extends="master.page">
+		<put-attribute name="title" value="Editar XXXX" />
+		<put-attribute name="body"
+			value="/views/remark/edit.jsp" />
+	</definition>
+
 
 </tiles-definitions>

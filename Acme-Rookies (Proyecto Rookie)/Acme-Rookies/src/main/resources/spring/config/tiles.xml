@@ -41,9 +41,8 @@
 		<value>/views/miscellaneousData/tiles.xml</value>
 		<value>/views/provider/tiles.xml</value>
 		<value>/views/item/tiles.xml</value>
-		
 		<value>/views/remark/tiles.xml</value>
-		
+
 		<value>/views/auditor/tiles.xml</value>
 			<value>/views/sponsorship/tiles.xml</value>
 

@@ -1,12 +1,13 @@
-
 package controllers.company;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Locale;
 
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,169 +15,156 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.AuditService;
-import services.CompanyService;
-import services.RemarkService;
 import controllers.AbstractController;
-import domain.Audit;
-import domain.Company;
+import domain.Application;
 import domain.Remark;
+import services.ApplicationService;
+import services.RemarkService;
 
 @Controller
-@RequestMapping("/remark/company/")
+@RequestMapping("/remark/company")
 public class RemarkCompanyController extends AbstractController {
 
-	//Servicio
 	@Autowired
-	private CompanyService	companyService;
-
-	//Servicios
-	@Autowired
-	private RemarkService	remarkService;
+	private RemarkService remarkService;
 
 	@Autowired
-	private AuditService	auditService;
+	private ApplicationService applicationService;
 
-
-	@RequestMapping(value = "/myList", method = RequestMethod.GET)
-	public ModelAndView MyList() {
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
 		ModelAndView result;
 		try {
-			this.companyService.findByPrincipal();
-			Collection<Remark> remarks;
-			final Date fecha = new Date();
-			final Long date = fecha.getTime();
-			final Boolean c = true;
-
-			remarks = this.remarkService.findByCompany();
 			result = new ModelAndView("remark/list");
-			result.addObject("requestURI", "remark/company/list.do");
+			Collection<Remark> remarks = this.remarkService.findAllByPrincipal();
 			result.addObject("remarks", remarks);
+			result.addObject("requestURI", "remark/company/list.do");
+			final Locale l = LocaleContextHolder.getLocale();
+			final String lang = l.getLanguage();
+			result.addObject("lang", lang);
+			
+			final Date d = new Date();
+			final Long date = d.getTime();
 			result.addObject("date", date);
-			result.addObject("c", c);
-
-		} catch (final Exception e) {
+			
+		} catch (Throwable oops) {
 			result = new ModelAndView("redirect:/#");
 		}
-
 		return result;
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
-
+	public ModelAndView create(@RequestParam int applicationId) {
 		ModelAndView result;
-
 		try {
-			final Remark remark = new Remark();
-			this.companyService.findByPrincipal();
-
+			Remark remark = this.remarkService.create(applicationId);
+			Application application = this.applicationService.findOne(applicationId);
 			result = this.createEditModelAndView(remark);
-
-		} catch (final Throwable oops) {
+			result.addObject("application", application);
+		} catch (Throwable oops) {
 			result = new ModelAndView("redirect:/#");
-
 		}
-
 		return result;
 	}
 
-	// Edition ----------------------------------------------------------------
-
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int remarkId) {
-		ModelAndView res;
+	public ModelAndView edit(@RequestParam int remarkId) {
+		ModelAndView result;
 		try {
-
-			this.companyService.findByPrincipal();
-			final Remark remark = this.remarkService.findOne(remarkId);
-			Assert.notNull(remark);
-			Assert.isTrue(remark.getMode().equals("DRAFT"));
-			final Collection<Remark> remarks = this.remarkService.findByCompany();
-			Assert.isTrue(remarks.contains(remark));
-			res = this.createEditModelAndView(remark);
-
-		} catch (final Throwable oops) {
-			res = new ModelAndView("redirect:/#");
+			Remark remark = this.remarkService.findOne(remarkId);
+			result = this.createEditModelAndView(remark);
+		} catch (Throwable oops) {
+			result = new ModelAndView("redirect:/#");
 		}
-		return res;
+		return result;
+	}
+
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam int remarkId) {
+		ModelAndView result;
+		try {
+			result = new ModelAndView("remark/show");
+			Remark remark = this.remarkService.findOne(remarkId);
+			result.addObject("remark", remark);
+			Assert.assertNotNull(remark);
+			
+			Collection<Remark> remarks = this.remarkService.findAllByPrincipal();
+			Boolean bool = remarks.contains(remark);
+			result.addObject("bool",bool);
+			
+			final Locale l = LocaleContextHolder.getLocale();
+			final String lang = l.getLanguage();
+			result.addObject("lang", lang);
+			
+		} catch (Throwable oops) {
+			result = new ModelAndView("redirect:/#");
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@ModelAttribute("remark") Remark remark, @RequestParam int applicationId,
+			final BindingResult binding) {
+		ModelAndView result;
+		Application application = this.applicationService.findOne(applicationId);
+		remark.setApplication(application);
+		remark = this.remarkService.reconstructCreate(remark, binding);
+		if (binding.hasErrors()) {
+			result = this.createEditModelAndView(remark);
+			result.addObject("application", application);
+		} else
+			try {
+				final Remark saved = this.remarkService.save(remark);
+				result = new ModelAndView("redirect:/remark/company/show.do?remarkId=" + saved.getId());
+			} catch (final Throwable oops) {
+				result = this.createEditModelAndView(remark, "remark.commit.error");
+				result.addObject("application",application);
+			}
+		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@ModelAttribute("remark") Remark remark, final BindingResult binding) {
-		ModelAndView res;
-		remark = this.remarkService.reconstruct(remark, binding);
-
+		ModelAndView result;
+		remark = this.remarkService.reconstructEdit(remark, binding);
 		if (binding.hasErrors())
-			res = this.createEditModelAndView(remark);
+			result = this.createEditModelAndView(remark);
 		else
 			try {
-				this.remarkService.save(remark);
-				res = new ModelAndView("redirect:/remark/company/myList.do");
-
+				final Remark saved = this.remarkService.save(remark);
+				result = new ModelAndView("redirect:/remark/company/show.do?remarkId=" + saved.getId());
 			} catch (final Throwable oops) {
-
-				res = this.createEditModelAndView(remark, "remark.commit.error");
-
+				result = this.createEditModelAndView(remark, "remark.commit.error");
 			}
-
-		return res;
+		return result;
 	}
 
-	//	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "delete")
-	//	public ModelAndView delete(final Position position, final BindingResult binding) {
-	//		ModelAndView result;
-	//		final Position pos = this.positionService.findOne(position.getId());
-	//		try {
-	//
-	//			this.positionService.delete(pos);
-	//			result = new ModelAndView("redirect:/position/company/myList.do");
-	//
-	//		} catch (final Throwable oops) {
-	//			result = this.createEditModelAndView(pos, "position.commit.error");
-	//
-	//			final String msg = oops.getMessage();
-	//			if (msg.equals("positioncannotDelete")) {
-	//				final Boolean positioncannotDelete = true;
-	//				result.addObject("positioncannotDelete", positioncannotDelete);
-	//
-	//			}
-	//		}
-	//
-	//		return result;
-	//	}
-	protected ModelAndView createEditModelAndView(final Remark remark) {
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(@ModelAttribute("remark") Remark remark) {
+		ModelAndView result;
+		remark = this.remarkService.findOne(remark.getId());
+		try {
+			Application app = remark.getApplication();
+			this.remarkService.delete(remark);
+			result = new ModelAndView("redirect:/application/company/show.do?applicationId=" + app.getId());
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(remark, "remark.commit.error");
+		}
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndView(Remark remark) {
 		return this.createEditModelAndView(remark, null);
 	}
+
 	protected ModelAndView createEditModelAndView(final Remark remark, final String messageCode) {
-		final ModelAndView res;
-		final Collection<Audit> audits = this.auditService.findByCompany();
-		res = new ModelAndView("remark/edit");
-		res.addObject("remark", remark);
-		res.addObject("audits", audits);
-		res.addObject("message", messageCode);
-
-		return res;
-	}
-
-	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView show(@RequestParam final int remarkId) {
 		ModelAndView result;
-		final Remark remark;
-
-		try {
-			final Company company = this.companyService.findByPrincipal();
-			Assert.notNull(remarkId);
-			remark = this.remarkService.findOne(remarkId);
-			Assert.isTrue(remark.getAudit().getPosition().getCompany().equals(company));
-
-			result = new ModelAndView("remark/show");
-			result.addObject("remark", remark);
-
-		} catch (final Exception e) {
-			result = new ModelAndView("redirect:/#");
-		}
-
+		if (remark.getId() == 0)
+			result = new ModelAndView("remark/create");
+		else
+			result = new ModelAndView("remark/edit");
+		result.addObject("remark", remark);
+		result.addObject("message", messageCode);
 		return result;
 	}
 

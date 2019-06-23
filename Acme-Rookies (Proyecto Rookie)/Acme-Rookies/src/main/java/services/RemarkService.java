@@ -1,8 +1,6 @@
 
 package services;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 
@@ -14,101 +12,136 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.RemarkRepository;
-import domain.Auditor;
+import domain.Application;
 import domain.Company;
 import domain.Remark;
+import domain.Rookie;
 
 @Service
 @Transactional
 public class RemarkService {
 
 	@Autowired
-	private RemarkRepository	remarkRepository;
+	private RemarkRepository remarkRepository;
 
 	@Autowired
-	private AuditorService		auditorService;
+	private ApplicationService applicationService;
 
 	@Autowired
-	private CompanyService		companyService;
+	private CompanyService companyService;
 
 	@Autowired
-	private Validator			validator;
+	private RookieService rookieService;
 
+	@Autowired
+	private Validator validator;
 
-	//COnstructors -------------------------
-	public RemarkService() {
-		super();
+	public Collection<Remark> findAllByApplication(final int applicationId) {
+		return this.remarkRepository.findAllByApplication(applicationId);
 	}
 
-	//Simple CRUD methods--------------------
+	public Remark create(int applicationId) {
+		Company principal = this.companyService.findByPrincipal();
 
-	public Remark create() {
-		Remark result;
+		Application application = this.applicationService.findOne(applicationId);
+		Collection<Application> applications = this.applicationService.findByPrincipalCompany(principal.getId());
 
-		result = new Remark();
+		Assert.isTrue(applications.contains(application));
 
-		return result;
-	}
-
-	public Collection<Remark> findAll() {
-		Collection<Remark> result;
-
-		result = this.remarkRepository.findAll();
+		final Remark result = new Remark();
 
 		return result;
 	}
 
 	public Remark findOne(final int remarkId) {
-		Remark result;
-
-		result = this.remarkRepository.findOne(remarkId);
-
+		final Remark result = this.remarkRepository.findOne(remarkId);
 		return result;
 	}
 
-	public void save(final Remark remark) {
-		Assert.notNull(remark);
-		this.companyService.findByPrincipal();
+	public Remark save(final Remark remark) {
+		Company principal = this.companyService.findByPrincipal();
 		if (remark.getId() != 0) {
-			final Remark remarkDB = this.findOne(remark.getId());
-			Assert.isTrue(remarkDB.getMode().equals("DRAFT"));
+			final Remark old = this.findOne(remark.getId());
+			Assert.isTrue(old.getMode().equals("DRAFT"));
+
+			Collection<Remark> remarks = this.remarkRepository.findAllByPrincipal(principal.getId());
+			Assert.isTrue(remarks.contains(old));
 		}
-		this.remarkRepository.save(remark);
+		final Remark result = this.remarkRepository.save(remark);
+		return result;
+	}
+
+	public Remark reconstructCreate(final Remark remark, final BindingResult binding) {
+		Company principal = this.companyService.findByPrincipal();
+		final Remark result = remark;
+
+		Date date = new Date();
+		result.setCompany(principal);
+		result.setPublicationMoment(date);
+		String ticker = this.generateTicker(date);
+		result.setTicker(ticker);
+		this.validator.validate(result, binding);
+		System.out.println(binding);
+		return result;
+
+	}
+
+	public Remark reconstructEdit(final Remark remark, final BindingResult binding) {
+		this.companyService.findByPrincipal();
+
+		final Remark old = this.remarkRepository.findOne(remark.getId());
+		final Remark result = remark;
+
+		result.setApplication(old.getApplication());
+		result.setCompany(old.getCompany());
+		result.setPublicationMoment(new Date());
+		result.setTicker(old.getTicker());
+		this.validator.validate(result, binding);
+		System.out.println(binding);
+		return result;
+
+	}
+
+	private String generateTicker(final Date date) {
+		final Integer year = date.getYear() % 100;
+		final Integer month = date.getMonth() + 1;
+		final Integer day = date.getDate();
+
+		String yy = "" + year;
+		String mm = "" + month;
+		String dd = "" + day;
+
+		if (year < 10)
+			yy = "0" + yy;
+
+		if (month < 10)
+			mm = "0" + mm;
+		if (day < 10)
+			dd = "0" + dd;
+		final String result = yy + mm + dd;
+		return result;
 	}
 
 	public void delete(final Remark remark) {
-		Assert.notNull(remark);
+		Company principal = this.companyService.findByPrincipal();
 		Assert.isTrue(remark.getMode().equals("DRAFT"));
+		Collection<Remark> remarks = this.remarkRepository.findAllByPrincipal(principal.getId());
+		Assert.isTrue(remarks.contains(remark));
 		this.remarkRepository.delete(remark);
 	}
 
-	public Collection<Remark> findByCompany() {
-		final Company company = this.companyService.findByPrincipal();
-		final Collection<Remark> res = this.remarkRepository.findByCompany(company.getId());
-		return res;
+	public Collection<Remark> findAllFinal(final int applicationId) {
+		return this.remarkRepository.findAllFinal(applicationId);
 	}
 
-	public Collection<Remark> findAllFinalMode() {
-		final Auditor aud = this.auditorService.findByPrincipal();
-		final Collection<Remark> res = this.remarkRepository.findAllFinalMode(aud.getId());
-		return res;
+	public Collection<Remark> findAllByPrincipal() {
+		final Company principal = this.companyService.findByPrincipal();
+		return this.remarkRepository.findAllByPrincipal(principal.getId());
 	}
 
-	public Remark reconstruct(final Remark remark, final BindingResult binding) {
-		this.companyService.findByPrincipal();
-		final Remark res = remark;
-		final Date date = new Date();
-		res.setMoment(date);
-		final Date aux = date;
-		final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		final String ticker = dateFormat.format(aux);
-		res.setTicker(ticker);
-		res.setTicker(ticker);
-
-		this.validator.validate(res, binding);
-		System.out.println(binding);
-		return res;
+	public Collection<Remark> findAllByRookie() {
+		final Rookie principal = this.rookieService.findByPrincipal();
+		return this.remarkRepository.findAllByRookie(principal.getId());
 	}
 
-	//Other Methods-------
 }

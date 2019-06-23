@@ -1562,48 +1562,6 @@
 		<property name="position" ref="position1" />
 	</bean>
 
-<!--  REMARKS -->
-
-	<bean id="remark1TEST" class="domain.Remark">
-		<property name="moment" value="08/12/2018" />
-		<property name="ticker" value="2018-08-12" />
-		<property name="body" value="TEST" />
-		<property name="picture" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
-		<property name="mode" value="FINAL" />
-		<property name="audit" ref="audit2" />
-		
-	</bean>
-	<bean id="remark2TEST" class="domain.Remark">
-		<property name="moment" value="08/12/2018" />
-		<property name="ticker" value="2018-08-12" />
-		<property name="body" value="TEST" />
-		<property name="picture" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
-		<property name="mode" value="FINAL" />
-		<property name="audit" ref="audit2" />
-		
-	</bean>
-	<bean id="remark3TEST" class="domain.Remark">
-		<property name="moment" value="06/20/2019" />
-		<property name="ticker" value="2019-06-20" />
-		<property name="body" value="TEST" />
-		<property name="picture" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
-		<property name="mode" value="FINAL" />
-		<property name="audit" ref="audit2" />
-		
-	</bean>
-	<bean id="remark4TEST" class="domain.Remark">
-		<property name="moment" value="05/05/2019" />
-		<property name="ticker" value="2019-05-05" />
-		<property name="body" value="TEST" />
-		<property name="picture" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
-		<property name="mode" value="FINAL" />
-		<property name="audit" ref="audit2" />
-		
-	</bean>
-
-
-
-
 	<!-- Spamwords -->
 
 	<bean id="spamWord1" class="domain.SpamWord">
@@ -1641,14 +1599,14 @@
 		<property name="body" value="TEST TEST TEST TEST TEST 1"/>
 		<property name="picture" value="https://www.TEST.com"/>
 		<property name="mode" value="DRAFT"/>
-		
+		<property name="publicationMoment" value="6/20/2019" />
 		<property name="application" ref="application1"></property>
 		<property name="company" ref="actor2"></property>
 	</bean>
 	
 	<bean id="remarkTEST2" class="domain.Remark">
 		<property name="ticker" value="190509"/>
-		<property name="publicationMoment" value="5/9/2019"/>
+		<property name="publicationMoment" value="5/16/2019"/>
 		<property name="body" value="TEST TEST TEST TEST TEST 2"/>
 		<property name="picture" value="https://www.TEST.com"/>
 		<property name="mode" value="FINAL"/>
@@ -1662,7 +1620,7 @@
 		<property name="body" value="TEST TEST TEST TEST TEST 3"/>
 		<property name="picture" value="https://www.TEST.com"/>
 		<property name="mode" value="DRAFT"/>
-		
+		<property name="publicationMoment" value="3/9/2019"/>
 		<property name="application" ref="application4"></property>
 		<property name="company" ref="actor3"></property>
 	</bean>

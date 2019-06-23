@@ -2,8 +2,11 @@
 package controllers.rookie;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -59,10 +62,17 @@ public class ApplicationRookieController extends AbstractController {
 			result.addObject("application", application);
 			result.addObject("b", b);
 			
+			// ------------ Remark ----------------
 			Collection<Remark> remarks = this.remarkService.findAllFinal(applicationId);
 			result.addObject("remarks", remarks);
+			final Locale l = LocaleContextHolder.getLocale();
+			final String lang = l.getLanguage();
+			result.addObject("lang", lang);
+			final Date d = new Date();
+			final Long date = d.getTime();
+			result.addObject("date", date);
 			
-			
+			// -------------------------------
 			
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/#");

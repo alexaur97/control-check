@@ -1,4 +1,3 @@
-
 package repositories;
 
 import java.util.Collection;
@@ -10,12 +9,19 @@ import org.springframework.stereotype.Repository;
 import domain.Remark;
 
 @Repository
-public interface RemarkRepository extends JpaRepository<Remark, Integer> {
+public interface RemarkRepository extends JpaRepository<Remark, Integer>{
 
-	@Query("select r from Remark r where r.audit.position.company.id=?1")
-	Collection<Remark> findByCompany(int id);
+	@Query("select r from Remark r where r.mode='FINAL' and r.application.id=?1")
+	Collection<Remark> findAllFinal(int id);
 
-	@Query("select r from Remark r where r.mode='FINAL' and r.audit.auditor.id=?1")
-	Collection<Remark> findAllFinalMode(int i);
+	@Query("select r from Remark r where r.application.id=?1")
+	Collection<Remark> findAllByApplication(int applicationId);
 
+	@Query("select r from Remark r where r.company.id=?1")
+	Collection<Remark> findAllByPrincipal(int id);
+
+	@Query("select r from Remark r where r.application.rookie.id=?1 and r.mode='FINAL'")
+	Collection<Remark> findAllByRookie(int id);
+	
+	
 }

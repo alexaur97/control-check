@@ -110,12 +110,36 @@
 
 	<display:table pagesize="5" requestURI="application/company/show.do"
 		class="displaytag" name="remarks" id="remark">
-		<display:column titleKey="remark.body" property="body" />
-		<display:column titleKey="remark.picture" property="picture" />
-		<display:column titleKey="remark.moment"
-			property="publicationMoment" />
-		<display:column titleKey="remark.ticker" property="ticker" />
-		<display:column titleKey="remark.mode" property="mode" />
+		
+
+<jstl:if test="${((date-remark.publicationMoment.time)/86400000)<30}">
+		<display:column style="color:indigo" titleKey="remark.body" property="body" />
+		<display:column style="color:indigo" titleKey="remark.picture" property="picture" />
+		<display:column style="color:indigo" titleKey="remark.ticker" property="ticker" />
+		
+			<display:column style="color:indigo" titleKey="remark.mode" property="mode" />
+		
+	</jstl:if>
+
+	<jstl:if test="${((date-remark.publicationMoment.time)/86400000)>30 and ((date-remark.publicationMoment.time)/86400000)<60}">
+		<display:column style="color:darkSlateGrey" titleKey="remark.body" property="body" />
+		<display:column style="color:darkSlateGrey" titleKey="remark.picture" property="picture" />
+		<display:column style="color:darkSlateGrey" titleKey="remark.ticker" property="ticker" />
+		
+			<display:column style="color:darkSlateGrey" titleKey="remark.mode" property="mode" />
+		
+	</jstl:if>
+
+	<jstl:if test="${((date-remark.publicationMoment.time)/86400000)>60}">
+		<display:column style="color:papayaWhip" titleKey="remark.body" property="body" />
+		<display:column style="color:papayaWhip" titleKey="remark.picture" property="picture" />
+		<display:column style="color:papayaWhip" titleKey="remark.ticker" property="ticker" />
+			<display:column style="color:papayaWhip" titleKey="remark.mode" property="mode" />
+		
+	</jstl:if>
+
+
+
 		<display:column titleKey="remark.show">
 			<acme:button url="remark/company/show.do?remarkId=${remark.id}"
 				code="remark.show" />
@@ -131,11 +155,34 @@
 <security:authorize access="hasRole('ROOKIE')">
 	<display:table pagesize="5" requestURI="application/rookie/show.do"
 		class="displaytag" name="remarks" id="remark">
-		<display:column titleKey="remark.body" property="body" />
-		<display:column titleKey="remark.picture" property="picture" />
-		<display:column titleKey="remark.moment"
-			property="publicationMoment" />
-		<display:column titleKey="remark.ticker" property="ticker" />
+		
+		<jstl:if test="${((date-remark.publicationMoment.time)/86400000)<30}">
+		<display:column style="color:indigo" titleKey="remark.body" property="body" />
+		<display:column style="color:indigo" titleKey="remark.picture" property="picture" />
+		<display:column style="color:indigo" titleKey="remark.ticker" property="ticker" />
+		
+			<display:column style="color:indigo" titleKey="remark.mode" property="mode" />
+		
+	</jstl:if>
+
+	<jstl:if test="${((date-remark.publicationMoment.time)/86400000)>30 and ((date-remark.publicationMoment.time)/86400000)<60}">
+		<display:column style="color:darkSlateGrey" titleKey="remark.body" property="body" />
+		<display:column style="color:darkSlateGrey" titleKey="remark.picture" property="picture" />
+		<display:column style="color:darkSlateGrey" titleKey="remark.ticker" property="ticker" />
+		
+			<display:column style="color:darkSlateGrey" titleKey="remark.mode" property="mode" />
+		
+	</jstl:if>
+
+	<jstl:if test="${((date-remark.publicationMoment.time)/86400000)>60}">
+		<display:column style="color:papayaWhip" titleKey="remark.body" property="body" />
+		<display:column style="color:papayaWhip" titleKey="remark.picture" property="picture" />
+		<display:column style="color:papayaWhip" titleKey="remark.ticker" property="ticker" />
+			<display:column style="color:papayaWhip" titleKey="remark.mode" property="mode" />
+		
+	</jstl:if>
+		
+		
 		<display:column titleKey="remark.show">
 			<acme:button url="remark/rookie/show.do?remarkId=${remark.id}"
 				code="remark.show" />
