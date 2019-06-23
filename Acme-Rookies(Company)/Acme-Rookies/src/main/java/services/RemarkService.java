@@ -94,6 +94,11 @@ public class RemarkService {
 		return res;
 	}
 
+	public Collection<Remark> findByAudit(final Integer id) {
+		final Collection<Remark> res = this.remarkRepository.findByAudit(id);
+		return res;
+	}
+
 	public Remark reconstruct(final Remark remark, final BindingResult binding) {
 		this.companyService.findByPrincipal();
 		final Remark res = remark;

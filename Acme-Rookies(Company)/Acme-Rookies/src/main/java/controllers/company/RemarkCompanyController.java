@@ -131,6 +131,8 @@ public class RemarkCompanyController extends AbstractController {
 		final Remark res = this.remarkService.findOne(remark.getId());
 		try {
 
+			final Company company = this.companyService.findByPrincipal();
+			Assert.isTrue(remark.getAudit().getPosition().getCompany().equals(company));
 			this.remarkService.delete(res);
 			result = new ModelAndView("redirect:/remark/company/myList.do");
 
@@ -141,7 +143,6 @@ public class RemarkCompanyController extends AbstractController {
 
 		return result;
 	}
-
 	//	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "delete")
 	//	public ModelAndView delete(final Position position, final BindingResult binding) {
 	//		ModelAndView result;

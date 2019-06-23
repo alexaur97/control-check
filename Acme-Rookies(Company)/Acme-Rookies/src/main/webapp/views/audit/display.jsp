@@ -31,3 +31,40 @@
 <acme:button url="/position/show.do?positionId=${audit.position.id}" code="audit.back"/>
 <br/>
 
+<jstl:if test="${c eq true}">
+
+<h4>
+	<spring:message code="audit.remarks" />
+</h4>
+<table>
+<tr>
+		<th><spring:message code="audit.remark.ticker" /></th>
+		<th><spring:message code="audit.show" /></th>
+	</tr>
+	
+<jstl:forEach items="${remarks}" var="x">
+		<tr>
+		<jstl:if test="${((date-x.moment.time)/86400000)<30}">
+			<td style="color:indigo"><jstl:out value="${x.ticker}" /></td>				
+				</jstl:if>
+					<jstl:if test="${((date-x.moment.time)/86400000)>30}">
+			<jstl:if test="${((date-x.moment.time)/86400000)<60}">
+										<td style="color:darkSlateGrey"><jstl:out value="${x.ticker}" /></td>
+			
+			</jstl:if>
+					</jstl:if>
+					<jstl:if test="${((date-x.moment.time)/86400000)>60}">
+					<td style="color:papayaWhip"><jstl:out value="${x.ticker}" /></td>
+				
+				</jstl:if>
+				<td><acme:cancel url="/remark/show.do?remarkId=${x.id}"
+			
+			code="audit.show" /></td>
+					
+			
+		</tr>
+</jstl:forEach>
+</table>
+</jstl:if>
+
+
