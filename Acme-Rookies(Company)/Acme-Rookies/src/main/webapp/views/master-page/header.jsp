@@ -42,6 +42,8 @@
 
 		<security:authorize access="hasRole('AUDITOR')">
 			<li><a href="audit/auditor/myList.do"><spring:message code="master.page.audits" /></a></li>
+			<li><a class="fNiv" href="remark/auditor/list.do"><spring:message
+						code="master.page.myRemarks" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('COMPANY')">
@@ -49,6 +51,8 @@
 						code="master.page.myPositions" /></a></li>
 			<li><a class="fNiv" href="application/company/list.do"><spring:message
 						code="master.page.myApplications" /></a></li>
+			<li><a class="fNiv" href="remark/company/myList.do"><spring:message
+						code="master.page.myRemarks" /></a></li>
 		</security:authorize>
 		<security:authorize access="hasRole('ROOKIE')">
 			<li><a class="fNiv" href="application/rookie/list.do"><spring:message

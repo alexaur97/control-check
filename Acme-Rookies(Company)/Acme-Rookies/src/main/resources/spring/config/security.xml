@@ -78,7 +78,23 @@
 
 		<security:intercept-url pattern="/position/auditor/show.do"
 			access="hasRole('AUDITOR')" />
-
+			
+		<security:intercept-url pattern="/remark/auditor/list.do"
+			access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/remark/auditor/show.do"
+			access="hasRole('AUDITOR')" />
+	
+	
+		<security:intercept-url pattern="/remark/company/myList.do"
+			access="hasRole('COMPANY')" />
+	
+		<security:intercept-url pattern="/remark/company/edit.do"
+			access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/remark/company/create.do"
+			access="hasRole('COMPANY')" />
+			
+		<security:intercept-url pattern="/remark/company/show.do"
+			access="hasRole('COMPANY')" />
 
 
 		<security:intercept-url pattern="/position/company/myList.do"

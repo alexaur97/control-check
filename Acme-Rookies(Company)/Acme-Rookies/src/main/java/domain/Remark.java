@@ -24,7 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Remark extends DomainEntity {
 
-	private String	photo;
+	private String	picture;
 	private Date	moment;
 	private String	body;
 	private String	ticker;
@@ -56,12 +56,12 @@ public class Remark extends DomainEntity {
 
 	@URL
 	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getPhoto() {
-		return this.photo;
+	public String getPicture() {
+		return this.picture;
 	}
 
-	public void setPhoto(final String photo) {
-		this.photo = photo;
+	public void setPicture(final String picture) {
+		this.picture = picture;
 	}
 
 	@NotNull
