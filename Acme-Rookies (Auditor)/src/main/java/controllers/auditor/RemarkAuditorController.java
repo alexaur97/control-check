@@ -106,18 +106,29 @@ public class RemarkAuditorController extends AbstractController {
 			else
 				try {
 
+					final Collection<Audit> audits = this.auditService.findByAuditor();
+
+					Assert.notEmpty(audits);
+
 					this.remarkService.save(remark);
 					res = new ModelAndView("redirect:/remark/auditor/myList.do");
 
 				} catch (final Throwable oops) {
+					final Collection<Audit> audits = this.auditService.findByAuditor();
 
-					res = this.createEditModelAndView(remark, "remark.commit.error");
-
+					if (audits.isEmpty())
+						res = this.createEditModelAndView(remark, "remark.audit.error");
+					else
+						res = this.createEditModelAndView(remark, "remark.commit.error");
 				}
 		} catch (final Throwable oops) {
 
-			res = this.createEditModelAndView(remark, "remark.commit.error");
+			final Collection<Audit> audits = this.auditService.findByAuditor();
 
+			if (audits.isEmpty())
+				res = this.createEditModelAndView(remark, "remark.audit.error");
+			else
+				res = this.createEditModelAndView(remark, "remark.commit.error");
 		}
 		return res;
 	}
