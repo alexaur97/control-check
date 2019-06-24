@@ -40,9 +40,24 @@
 	</tr>
 <jstl:forEach items="${remarks}" var="x">
 		<tr>
-			<td><jstl:out value="${x.ticker}" /></td>		
-			<td><acme:cancel url="/remark/auditor/show.do?remarkId=${x.id}"
-			code="audit.show" /></td>
+		<jstl:if test="${((date-x.moment.time)/86400000)<30}">
+			<td style="color:indigo"><jstl:out value="${x.ticker}" /></td>				
+		</jstl:if>
+		<jstl:if test="${((date-x.moment.time)/86400000)>30}">
+		<jstl:if test="${((date-x.moment.time)/86400000)<60}">
+										<td style="color:darkSlateGrey"><jstl:out value="${x.ticker}" /></td>
+			
+		</jstl:if>
+		</jstl:if>
+		<jstl:if test="${((date-x.moment.time)/86400000)>60}">
+					<td style="color:papayaWhip"><jstl:out value="${x.ticker}" /></td>
+				
+		</jstl:if>
+
+			<td><acme:cancel url="/remark/display.do?remarkId=${x.id}"
+			code="audit.remark.display" /></td>
+											
+			
 		</tr>
 </jstl:forEach>
 </table>

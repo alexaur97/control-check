@@ -71,7 +71,7 @@
 </jstl:forEach>
 </table>
 </jstl:if>
-	<acme:cancel url="/remark/auditor/create.do" code="remark.create" />
+	<acme:cancel url="/remark/auditor/create.do" code="audit.createRemark" />
 
 </security:authorize>
 
@@ -96,7 +96,6 @@
 </jstl:forEach>
 </table>
 </jstl:if>
-	<acme:cancel url="/remark/auditor/create.do" code="remark.create" />
 </security:authorize>
 
 
