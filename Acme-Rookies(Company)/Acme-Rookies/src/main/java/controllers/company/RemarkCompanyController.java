@@ -113,13 +113,19 @@ public class RemarkCompanyController extends AbstractController {
 			res = this.createEditModelAndView(remark);
 		else
 			try {
+				final Collection<Audit> audits = this.auditService.findByCompany();
+				Assert.notEmpty(audits);
 				this.remarkService.save(remark);
 				res = new ModelAndView("redirect:/remark/company/myList.do");
 
 			} catch (final Throwable oops) {
 
-				res = this.createEditModelAndView(remark, "remark.commit.error");
+				final Collection<Audit> audits = this.auditService.findByCompany();
 
+				if (audits.isEmpty())
+					res = this.createEditModelAndView(remark, "remark.audit.error");
+				else
+					res = this.createEditModelAndView(remark, "remark.commit.error");
 			}
 
 		return res;
@@ -150,9 +156,11 @@ public class RemarkCompanyController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Remark remark, final String messageCode) {
 		final ModelAndView res;
 		final Collection<Audit> audits = this.auditService.findByCompany();
+		final Boolean b = audits.isEmpty();
 		res = new ModelAndView("remark/edit");
 		res.addObject("remark", remark);
 		res.addObject("audits", audits);
+		res.addObject("b", b);
 		res.addObject("message", messageCode);
 
 		return res;
