@@ -1559,7 +1559,7 @@
 		<property name="score" value="9" />
 		<property name="mode" value="FINAL" />
 		<property name="auditor" ref="actor9" />
-		<property name="position" ref="position1" />
+		<property name="position" ref="position3" />
 	</bean>
 
 <!--  REMARKS -->
@@ -1570,7 +1570,7 @@
 		<property name="body" value="TEST" />
 		<property name="picture" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
 		<property name="mode" value="FINAL" />
-		<property name="audit" ref="audit2" />
+		<property name="audit" ref="audit1" />
 		
 	</bean>
 	<bean id="remark2TEST" class="domain.Remark">
@@ -1587,8 +1587,8 @@
 		<property name="ticker" value="2019-06-20" />
 		<property name="body" value="TEST" />
 		<property name="picture" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
-		<property name="mode" value="FINAL" />
-		<property name="audit" ref="audit2" />
+		<property name="mode" value="DRAFT" />
+		<property name="audit" ref="audit1" />
 		
 	</bean>
 	<bean id="remark4TEST" class="domain.Remark">
@@ -1596,7 +1596,7 @@
 		<property name="ticker" value="2019-05-05" />
 		<property name="body" value="TEST" />
 		<property name="picture" value="https://herramientas-online.com/generador-tarjeta-credito-cvv.php"/>
-		<property name="mode" value="FINAL" />
+		<property name="mode" value="DRAFT" />
 		<property name="audit" ref="audit2" />
 		
 	</bean>

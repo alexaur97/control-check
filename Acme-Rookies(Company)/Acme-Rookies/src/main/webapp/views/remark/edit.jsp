@@ -63,6 +63,11 @@
 				</form:form>
 			</fieldset>
 		
+		<jstl:if test="${b eq true}">
+		
+		<spring:message code ="remark.audit.error"/>	
+		
+		</jstl:if>
 
 		</div>
 	</div>
