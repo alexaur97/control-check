@@ -68,6 +68,7 @@ public class RemarkService {
 
 	public void save(final Remark remark) {
 		Assert.notNull(remark);
+		Assert.isTrue(remark.getAudit().getAuditor().equals(remark.getAuditor()));
 		if (remark.getId() != 0) {
 			final Remark remarkDB = this.findOne(remark.getId());
 			System.out.println(remarkDB.getMode());
