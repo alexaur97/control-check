@@ -12,8 +12,8 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <acme:display code="remark.body" path="${remark.body}"/>
-<spring:message code="remark.picture" />
-<a href="${remark.picture}">: <jstl:out value="${remark.picture}"/></a>
+<spring:message code="remark.picture" />:
+<a href="${remark.picture}"><jstl:out value="${remark.picture}"/></a>
 <br/>
 
 <jstl:if test="${not empty remark.publicationMoment}">
