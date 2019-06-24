@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import services.AuditService;
 import services.RemarkService;
 import utilities.AbstractTest;
+import domain.Audit;
 import domain.Remark;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,6 +28,9 @@ public class RemarkServiceTest extends AbstractTest {
 
 	@Autowired
 	private RemarkService	remarkService;
+
+	@Autowired
+	private AuditService	auditService;
 
 
 	@Test
@@ -40,7 +45,9 @@ public class RemarkServiceTest extends AbstractTest {
 		r.setMoment(fecha);
 		r.setPicture("http://foto.jpg");
 		r.setTicker("2019-06-06");
-
+		final int idAudit = super.getEntityId("audit1");
+		final Audit audit = this.auditService.findOne(idAudit);
+		r.setAudit(audit);
 		this.remarkService.save(r);
 		super.unauthenticate();
 
@@ -58,6 +65,9 @@ public class RemarkServiceTest extends AbstractTest {
 		r.setMoment(fecha);
 		r.setPicture("http://foto.jpg");
 		r.setTicker("2019-06-06");
+		final int idAudit = super.getEntityId("audit1");
+		final Audit audit = this.auditService.findOne(idAudit);
+		r.setAudit(audit);
 
 		this.remarkService.save(r);
 		super.unauthenticate();
